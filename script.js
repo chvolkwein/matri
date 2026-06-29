@@ -1,6 +1,6 @@
 // 1) Publica el Apps Script como Web App.
 // 2) Copia la URL terminada en /exec aquí abajo.
-const API_URL = 'PEGAR_AQUI_URL_DEL_APPS_SCRIPT_EXEC';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzh-h4xncQ7uwVMq5K8MYNI3LIvBeQ_8Tr5-sQKbwlwPxMGFwBInZ7_eGhloF-5DctPYw/exec';
 
 const passwordInput = document.getElementById('password');
 const unlockBtn = document.getElementById('unlockBtn');
