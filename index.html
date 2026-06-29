@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nuestro matrimonio</title>
+  <meta name="description" content="Invitación de matrimonio" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Nos casamos</p>
+      <h1>Nombre 1 & Nombre 2</h1>
+      <p class="date">Sábado 9 de enero de 2027</p>
+      <p class="place">Lugar / ciudad</p>
+    </section>
+
+    <section class="card">
+      <h2>Queremos celebrar contigo</h2>
+      <p>
+        Estamos muy felices de compartir este día con ustedes. Aquí encontrarás la información
+        principal de la celebración y, más abajo, una forma simple de acceder a los datos para regalo.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Ceremonia</h2>
+        <p><strong>Hora:</strong> 17:00</p>
+        <p><strong>Lugar:</strong> Nombre del lugar</p>
+        <p><strong>Dirección:</strong> Dirección completa</p>
+      </article>
+
+      <article class="card">
+        <h2>Celebración</h2>
+        <p><strong>Hora:</strong> 19:00</p>
+        <p><strong>Lugar:</strong> Nombre del lugar</p>
+        <p><strong>Dress code:</strong> Formal / cocktail / el que quieran</p>
+      </article>
+    </section>
+
+    <section class="card gift-card">
+      <h2>Regalo</h2>
+      <p>
+        Su compañía es lo más importante. Si además quieren hacernos un regalo, pueden acceder
+        a los datos de transferencia usando la clave que compartimos con la invitación.
+      </p>
+
+      <div class="password-box">
+        <label for="password">Clave</label>
+        <div class="password-row">
+          <input id="password" type="password" placeholder="Ingresar clave" autocomplete="off" />
+          <button id="unlockBtn" type="button">Ver datos</button>
+        </div>
+        <p id="status" class="status" aria-live="polite"></p>
+      </div>
+
+      <div id="bankInfo" class="bank-info hidden"></div>
+    </section>
+
+    <section class="card">
+      <h2>Confirmación</h2>
+      <p>
+        Por favor confirma tu asistencia respondiendo el mensaje de WhatsApp o escribiéndonos directamente.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Con cariño, Nombre 1 & Nombre 2</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
