@@ -8,102 +8,90 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Nos casamos</p>
-      <h1>Viviana & Christopher</h1>
-      <p class="date">Sábado 9 de enero de 2027</p>
-      <p class="place">Lugar / ciudad</p>
+  <main class="page">
+    <section class="hero-card">
+      <p class="kicker">Nos casamos</p>
+      <h1>Nombre 1 & Nombre 2</h1>
+      <p class="hero-date">Sábado 9 de enero de 2027</p>
+      <p class="hero-place">Lugar / ciudad</p>
     </section>
 
-    <section class="card intro-card">
-      <h2>Queremos celebrar contigo</h2>
-      <p>
-        Estamos muy felices de compartir este día con ustedes. Aquí encontrarás la información
-        principal de la celebración y las opciones para regalos.
-      </p>
-    </section>
-
-    <section class="grid">
-      <article class="card">
+    <section class="info-grid" aria-label="Información del matrimonio">
+      <article class="info-card">
         <h2>Ceremonia</h2>
         <p><strong>Hora:</strong> 17:00</p>
         <p><strong>Lugar:</strong> Nombre del lugar</p>
         <p><strong>Dirección:</strong> Dirección completa</p>
       </article>
 
-      <article class="card">
+      <article class="info-card">
         <h2>Celebración</h2>
         <p><strong>Hora:</strong> 19:00</p>
         <p><strong>Lugar:</strong> Nombre del lugar</p>
-        <p><strong>Dress code:</strong> Formal / cocktail / el que quieran</p>
+        <p><strong>Dress code:</strong> Formal / cocktail</p>
       </article>
     </section>
 
     <section id="regalos" class="gifts-section">
-      <div class="section-heading">
+      <div class="section-title">
         <h2>Regalos</h2>
-        <p>
-          Lo más importante es que nos acompañen. Para quienes quieran hacernos un regalo,
-          dejamos estas opciones simples.
-        </p>
+        <p>Lo más importante es que nos acompañen. Para quienes quieran hacernos un regalo, dejamos estas opciones simples.</p>
       </div>
 
-      <div class="gifts-layout">
-        <article class="gift-panel gift-panel-main">
+      <div class="gifts-grid">
+        <article class="gift-card gift-card-main">
           <p class="option-label">Opción 1</p>
           <h3>Transferencia + lista simbólica</h3>
-          <p>
-            Pueden elegir un regalo simbólico, dejarnos un mensaje y luego transferir a la cuenta
-            que prefieran. Así queda registrado quién regaló qué, el monto y el mensaje.
-          </p>
+          <p class="card-copy">Pueden elegir un regalo simbólico, dejarnos un mensaje y luego transferir a la cuenta que prefieran. Así queda registrado quién regaló qué, el monto y el mensaje.</p>
 
-          <div class="gift-options" aria-label="Regalos simbólicos">
-            <button class="gift-item" type="button" data-gift="Luna de miel" data-amount="50000">
-              <span>
+          <div class="gift-list" aria-label="Regalos simbólicos">
+            <button class="gift-row" type="button" data-gift="Luna de miel" data-amount="50000">
+              <span class="gift-text">
                 <strong>Luna de miel</strong>
                 <small>Un aporte para nuestro viaje.</small>
                 <b>$50.000 sugerido</b>
               </span>
-              <em>Elegir</em>
+              <span class="pill">Elegir</span>
             </button>
 
-            <button class="gift-item" type="button" data-gift="Cena especial" data-amount="35000">
-              <span>
+            <button class="gift-row" type="button" data-gift="Cena especial" data-amount="35000">
+              <span class="gift-text">
                 <strong>Cena especial</strong>
                 <small>Para celebrar después del matrimonio.</small>
                 <b>$35.000 sugerido</b>
               </span>
-              <em>Elegir</em>
+              <span class="pill">Elegir</span>
             </button>
 
-            <button class="gift-item" type="button" data-gift="Nuestro hogar" data-amount="">
-              <span>
+            <button class="gift-row" type="button" data-gift="Nuestro hogar" data-amount="">
+              <span class="gift-text">
                 <strong>Nuestro hogar</strong>
                 <small>Para empezar esta nueva etapa.</small>
                 <b>Aporte libre</b>
               </span>
-              <em>Elegir</em>
+              <span class="pill">Elegir</span>
             </button>
 
-            <button class="gift-item" type="button" data-gift="Experiencias" data-amount="">
-              <span>
+            <button class="gift-row" type="button" data-gift="Experiencias" data-amount="">
+              <span class="gift-text">
                 <strong>Experiencias</strong>
                 <small>Paseos, panoramas y recuerdos.</small>
                 <b>Aporte libre</b>
               </span>
-              <em>Elegir</em>
+              <span class="pill">Elegir</span>
             </button>
           </div>
 
-          <button id="openGiftFormBtn" class="primary-button wide-button" type="button">
-            Registrar regalo o mensaje
-          </button>
-
-          <div id="giftForm" class="gift-form hidden">
-            <div class="selected-summary">
-              <span>Regalo elegido</span>
-              <strong id="selectedGiftText">Aporte libre</strong>
+          <div class="form-box" id="registro">
+            <div class="form-title-row">
+              <div>
+                <p class="mini-label">Registro</p>
+                <h4>Registrar regalo o mensaje</h4>
+              </div>
+              <div class="selected-gift">
+                <span>Elegido</span>
+                <strong id="selectedGiftText">Aporte libre</strong>
+              </div>
             </div>
 
             <div class="form-grid">
@@ -123,48 +111,41 @@
               <textarea id="giftMessage" rows="3" placeholder="Escribe un mensaje para los novios"></textarea>
             </label>
 
-            <label>
-              Clave para ver datos de transferencia
-              <input id="giftPassword" type="password" placeholder="Ingresar clave" autocomplete="off" />
-            </label>
+            <button id="registerGiftBtn" class="main-button" type="button">Registrar regalo o mensaje</button>
+            <p id="registerStatus" class="status" aria-live="polite"></p>
+          </div>
 
-            <button id="registerGiftBtn" class="primary-button" type="button">
-              Registrar y ver datos de transferencia
-            </button>
+          <div class="password-box" id="datos-transferencia">
+            <div>
+              <p class="mini-label">Datos de transferencia</p>
+              <h4>Ingresa la clave</h4>
+              <p class="small-copy">La clave evita que los datos bancarios queden visibles para cualquiera que abra la página.</p>
+            </div>
 
-            <p id="giftStatus" class="status" aria-live="polite"></p>
-            <div id="bankInfo" class="bank-info hidden"></div>
+            <div class="password-row">
+              <input id="bankPassword" type="password" placeholder="Clave" autocomplete="off" />
+              <button id="showBankBtn" class="main-button compact" type="button">Mostrar datos</button>
+            </div>
+
+            <p id="bankStatus" class="status" aria-live="polite"></p>
+            <pre id="bankInfo" class="bank-info hidden"></pre>
           </div>
         </article>
 
-        <article class="gift-panel gift-panel-side">
+        <article class="gift-card gift-card-side">
           <p class="option-label">Opción 2</p>
           <h3>Lista de novios externa</h3>
-          <p>
-            También pueden usar una plataforma externa de lista de novios, donde el proceso
-            de regalo queda centralizado.
-          </p>
+          <p class="card-copy">También pueden usar una plataforma externa de lista de novios, donde el proceso de regalo queda centralizado.</p>
 
-          <a class="primary-button external-button" href="https://www.ejemplo.com/lista-novios" target="_blank" rel="noopener">
-            Ir a la lista externa
-          </a>
+          <a class="main-button external-link" href="https://www.ejemplo.com/lista-novios" target="_blank" rel="noopener">Ir a la lista externa</a>
 
-          <p class="small-note">
-            Reemplacen este link por Mi Lista de Novios, Falabella, Paris u otra plataforma.
-          </p>
+          <p class="small-copy">Reemplacen este link por Mi Lista de Novios, Falabella, Paris u otra plataforma.</p>
         </article>
       </div>
     </section>
-
-    <section class="card">
-      <h2>Confirmación</h2>
-      <p>
-        Por favor confirma tu asistencia respondiendo el mensaje de WhatsApp o escribiéndonos directamente.
-      </p>
-    </section>
   </main>
 
-  <footer>
+  <footer class="footer">
     <p>Con cariño, Nombre 1 & Nombre 2</p>
   </footer>
 
