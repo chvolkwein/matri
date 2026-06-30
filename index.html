@@ -5,15 +5,282 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Nuestro matrimonio</title>
   <meta name="description" content="Invitación de matrimonio" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg: #f7f1ea;
+      --paper: #fffaf5;
+      --paper-2: #fffdf9;
+      --text: #2b2520;
+      --muted: #76685e;
+      --accent: #9c6f57;
+      --accent-dark: #76503d;
+      --accent-light: #d9c3b4;
+      --line: #eadfd4;
+      --shadow: 0 18px 45px rgba(72, 49, 31, 0.12);
+      --sans: Arial, Helvetica, sans-serif;
+      --serif: Georgia, 'Times New Roman', serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: radial-gradient(circle at 10% 0%, #fffdf9 0%, transparent 32%), var(--bg);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    h1, h2, h3, h4, p { margin-top: 0; }
+
+    .page, .footer {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .page { padding: 42px 0 36px; }
+
+    .hero {
+      min-height: 44vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 64px 24px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background: rgba(255, 250, 245, 0.78);
+      box-shadow: var(--shadow);
+    }
+
+    .kicker, .option-label, .mini-label {
+      margin: 0;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    h1, h2 {
+      font-family: var(--serif);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(3.1rem, 8vw, 6.7rem);
+      line-height: 0.95;
+    }
+
+    .hero-date {
+      margin: 8px 0 4px;
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+    }
+
+    .hero-place, .muted, .small-copy, .status, .footer { color: var(--muted); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .info-card, .gift-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 253, 249, 0.92);
+      box-shadow: 0 14px 36px rgba(75, 54, 39, 0.08);
+    }
+
+    .info-card { padding: 28px; }
+    .info-card h2 { margin-bottom: 14px; font-size: 1.65rem; line-height: 1.1; }
+    .info-card p { margin-bottom: 8px; }
+
+    .gifts-section { margin-top: 46px; }
+
+    .section-title { max-width: 850px; margin-bottom: 28px; }
+    .section-title h2 {
+      margin-bottom: 16px;
+      font-size: clamp(3rem, 6vw, 4.7rem);
+      line-height: 0.95;
+    }
+    .section-title p { margin-bottom: 0; color: var(--muted); font-size: 1.05rem; }
+
+    .gifts-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .gift-card { padding: 26px; }
+    .gift-card h3 { margin: 6px 0 12px; font-size: 1.35rem; line-height: 1.18; }
+    .card-copy { margin-bottom: 18px; color: var(--muted); font-size: 1rem; }
+
+    .gift-list { display: grid; gap: 14px; margin-top: 20px; }
+
+    .gift-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 20px 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--paper);
+      color: var(--text);
+      text-align: left;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .gift-row:hover, .gift-row.selected {
+      transform: translateY(-1px);
+      border-color: var(--accent-light);
+      box-shadow: 0 12px 28px rgba(75, 54, 39, 0.1);
+    }
+
+    .gift-text { display: grid; gap: 2px; }
+    .gift-text strong { font-size: 1.02rem; line-height: 1.25; }
+    .gift-text small { color: var(--muted); font-size: 0.95rem; }
+    .gift-text b { color: var(--accent-dark); font-size: 1rem; }
+
+    .pill {
+      flex: 0 0 auto;
+      min-width: 86px;
+      padding: 10px 18px;
+      border: 1px solid var(--accent-light);
+      border-radius: 999px;
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .gift-row.selected .pill { border-color: var(--accent); background: var(--accent); color: white; }
+
+    .box {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .box-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    h4 { margin: 5px 0 0; font-size: 1.12rem; }
+
+    .selected-gift {
+      min-width: 150px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f7efe8;
+      text-align: right;
+    }
+
+    .selected-gift span { display: block; color: var(--muted); font-size: 0.78rem; }
+    .selected-gift strong { display: block; line-height: 1.2; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    label { display: grid; gap: 7px; margin-bottom: 14px; color: var(--muted); font-size: 0.92rem; font-weight: 800; }
+
+    input, textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fffdf9;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, textarea:focus { border-color: var(--accent-light); box-shadow: 0 0 0 4px rgba(156, 111, 87, 0.10); }
+    textarea { resize: vertical; }
+
+    .password-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+
+    .main-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .main-button:hover { background: var(--accent-dark); transform: translateY(-1px); }
+    .main-button:disabled { opacity: 0.62; cursor: not-allowed; transform: none; }
+    .main-button.compact { min-width: 145px; }
+    .main-button.full { width: 100%; margin-top: 4px; }
+    .external-link { width: 100%; margin: 8px 0 16px; }
+
+    .status { min-height: 1.4em; margin: 10px 0 0; font-size: 0.95rem; }
+
+    .bank-info {
+      margin-top: 16px;
+      padding: 18px;
+      border: 1px dashed var(--accent);
+      border-radius: 16px;
+      background: var(--paper);
+      color: var(--text);
+      white-space: pre-line;
+      font-family: var(--sans);
+    }
+
+    .hidden { display: none !important; }
+
+    .footer { padding: 0 0 32px; text-align: center; }
+
+    @media (max-width: 860px) {
+      .page { padding-top: 24px; }
+      .hero { min-height: 40vh; padding: 48px 18px; }
+      .info-grid, .gifts-grid, .form-grid { grid-template-columns: 1fr; }
+      .gift-card { padding: 22px; }
+    }
+
+    @media (max-width: 560px) {
+      .page, .footer { width: min(100% - 22px, 1180px); }
+      .gift-row { align-items: stretch; flex-direction: column; gap: 12px; }
+      .pill { width: 100%; }
+      .box-head { flex-direction: column; }
+      .selected-gift { width: 100%; text-align: left; }
+      .password-row { grid-template-columns: 1fr; }
+      .main-button.compact { width: 100%; }
+    }
+  </style>
 </head>
 <body>
   <main class="page">
-    <section class="hero-card">
-      <p class="kicker">Nos casamos</p>
-      <h1>Nombre 1 & Nombre 2</h1>
-      <p class="hero-date">Sábado 9 de enero de 2027</p>
-      <p class="hero-place">Lugar / ciudad</p>
+    <section class="hero">
+      <div>
+        <p class="kicker">Nos casamos</p>
+        <h1>Nombre 1 & Nombre 2</h1>
+        <p class="hero-date">Sábado 9 de enero de 2027</p>
+        <p class="hero-place">Lugar / ciudad</p>
+      </div>
     </section>
 
     <section class="info-grid" aria-label="Información del matrimonio">
@@ -39,106 +306,70 @@
       </div>
 
       <div class="gifts-grid">
-        <article class="gift-card gift-card-main">
+        <article class="gift-card">
           <p class="option-label">Opción 1</p>
           <h3>Transferencia + lista simbólica</h3>
           <p class="card-copy">Pueden elegir un regalo simbólico, dejarnos un mensaje y luego transferir a la cuenta que prefieran. Así queda registrado quién regaló qué, el monto y el mensaje.</p>
 
           <div class="gift-list" aria-label="Regalos simbólicos">
             <button class="gift-row" type="button" data-gift="Luna de miel" data-amount="50000">
-              <span class="gift-text">
-                <strong>Luna de miel</strong>
-                <small>Un aporte para nuestro viaje.</small>
-                <b>$50.000 sugerido</b>
-              </span>
+              <span class="gift-text"><strong>Luna de miel</strong><small>Un aporte para nuestro viaje.</small><b>$50.000 sugerido</b></span>
               <span class="pill">Elegir</span>
             </button>
 
             <button class="gift-row" type="button" data-gift="Cena especial" data-amount="35000">
-              <span class="gift-text">
-                <strong>Cena especial</strong>
-                <small>Para celebrar después del matrimonio.</small>
-                <b>$35.000 sugerido</b>
-              </span>
+              <span class="gift-text"><strong>Cena especial</strong><small>Para celebrar después del matrimonio.</small><b>$35.000 sugerido</b></span>
               <span class="pill">Elegir</span>
             </button>
 
             <button class="gift-row" type="button" data-gift="Nuestro hogar" data-amount="">
-              <span class="gift-text">
-                <strong>Nuestro hogar</strong>
-                <small>Para empezar esta nueva etapa.</small>
-                <b>Aporte libre</b>
-              </span>
+              <span class="gift-text"><strong>Nuestro hogar</strong><small>Para empezar esta nueva etapa.</small><b>Aporte libre</b></span>
               <span class="pill">Elegir</span>
             </button>
 
             <button class="gift-row" type="button" data-gift="Experiencias" data-amount="">
-              <span class="gift-text">
-                <strong>Experiencias</strong>
-                <small>Paseos, panoramas y recuerdos.</small>
-                <b>Aporte libre</b>
-              </span>
+              <span class="gift-text"><strong>Experiencias</strong><small>Paseos, panoramas y recuerdos.</small><b>Aporte libre</b></span>
               <span class="pill">Elegir</span>
             </button>
           </div>
 
-          <div class="form-box" id="registro">
-            <div class="form-title-row">
-              <div>
-                <p class="mini-label">Registro</p>
-                <h4>Registrar regalo o mensaje</h4>
-              </div>
-              <div class="selected-gift">
-                <span>Elegido</span>
-                <strong id="selectedGiftText">Aporte libre</strong>
-              </div>
-            </div>
-
-            <div class="form-grid">
-              <label>
-                Tu nombre
-                <input id="guestName" type="text" placeholder="Nombre y apellido" autocomplete="name" />
-              </label>
-
-              <label>
-                Monto
-                <input id="giftAmount" type="text" placeholder="Ej: 50000" inputmode="numeric" />
-              </label>
-            </div>
-
-            <label>
-              Mensaje opcional
-              <textarea id="giftMessage" rows="3" placeholder="Escribe un mensaje para los novios"></textarea>
-            </label>
-
-            <button id="registerGiftBtn" class="main-button" type="button">Registrar regalo o mensaje</button>
-            <p id="registerStatus" class="status" aria-live="polite"></p>
-          </div>
-
-          <div class="password-box" id="datos-transferencia">
-            <div>
-              <p class="mini-label">Datos de transferencia</p>
-              <h4>Ingresa la clave</h4>
-              <p class="small-copy">La clave evita que los datos bancarios queden visibles para cualquiera que abra la página.</p>
-            </div>
-
+          <div class="box" id="datos-transferencia">
+            <p class="mini-label">Datos de transferencia</p>
+            <h4>Ingresa la clave</h4>
+            <p class="small-copy">Al escribir la clave correcta, se muestran los datos bancarios.</p>
             <div class="password-row">
               <input id="bankPassword" type="password" placeholder="Clave" autocomplete="off" />
               <button id="showBankBtn" class="main-button compact" type="button">Mostrar datos</button>
             </div>
-
             <p id="bankStatus" class="status" aria-live="polite"></p>
             <pre id="bankInfo" class="bank-info hidden"></pre>
           </div>
+
+          <div class="box" id="registro">
+            <div class="box-head">
+              <div>
+                <p class="mini-label">Registro</p>
+                <h4>Registrar regalo o mensaje</h4>
+              </div>
+              <div class="selected-gift"><span>Elegido</span><strong id="selectedGiftText">Aporte libre</strong></div>
+            </div>
+
+            <div class="form-grid">
+              <label>Tu nombre<input id="guestName" type="text" placeholder="Nombre y apellido" autocomplete="name" /></label>
+              <label>Monto<input id="giftAmount" type="text" placeholder="Ej: 50000" inputmode="numeric" /></label>
+            </div>
+
+            <label>Mensaje opcional<textarea id="giftMessage" rows="3" placeholder="Escribe un mensaje para los novios"></textarea></label>
+            <button id="registerGiftBtn" class="main-button full" type="button">Registrar regalo o mensaje</button>
+            <p id="registerStatus" class="status" aria-live="polite"></p>
+          </div>
         </article>
 
-        <article class="gift-card gift-card-side">
+        <article class="gift-card">
           <p class="option-label">Opción 2</p>
           <h3>Lista de novios externa</h3>
           <p class="card-copy">También pueden usar una plataforma externa de lista de novios, donde el proceso de regalo queda centralizado.</p>
-
           <a class="main-button external-link" href="https://www.ejemplo.com/lista-novios" target="_blank" rel="noopener">Ir a la lista externa</a>
-
           <p class="small-copy">Reemplacen este link por Mi Lista de Novios, Falabella, Paris u otra plataforma.</p>
         </article>
       </div>
@@ -149,6 +380,146 @@
     <p>Con cariño, Nombre 1 & Nombre 2</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Pega aquí la URL /exec del Apps Script.
+    // Ejemplo: https://script.google.com/macros/s/AKfycb.../exec
+    const APPS_SCRIPT_URL = 'PEGAR_AQUI_URL_DEL_APPS_SCRIPT_EXEC';
+
+    const giftRows = document.querySelectorAll('.gift-row');
+    const selectedGiftText = document.getElementById('selectedGiftText');
+    const giftAmountInput = document.getElementById('giftAmount');
+    const guestNameInput = document.getElementById('guestName');
+    const giftMessageInput = document.getElementById('giftMessage');
+    const registerGiftBtn = document.getElementById('registerGiftBtn');
+    const registerStatus = document.getElementById('registerStatus');
+    const bankPasswordInput = document.getElementById('bankPassword');
+    const showBankBtn = document.getElementById('showBankBtn');
+    const bankStatus = document.getElementById('bankStatus');
+    const bankInfo = document.getElementById('bankInfo');
+    let selectedGift = 'Aporte libre';
+
+    function configured() {
+      return APPS_SCRIPT_URL && !APPS_SCRIPT_URL.includes('PEGAR_AQUI');
+    }
+
+    function status(el, text) { el.textContent = text || ''; }
+
+    function formatCLP(value) {
+      const numeric = String(value || '').replace(/\D/g, '');
+      if (!numeric) return '';
+      return new Intl.NumberFormat('es-CL').format(Number(numeric));
+    }
+
+    function jsonp(params) {
+      return new Promise((resolve, reject) => {
+        if (!configured()) {
+          reject(new Error('Falta pegar la URL /exec del Apps Script dentro de index.html.'));
+          return;
+        }
+
+        const callbackName = 'weddingCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        const query = new URLSearchParams({ ...params, callback: callbackName });
+        const script = document.createElement('script');
+        script.src = APPS_SCRIPT_URL + '?' + query.toString();
+
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error('No hubo respuesta de Google Apps Script.'));
+        }, 12000);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+        }
+
+        window[callbackName] = (data) => {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('No se pudo conectar con Google Apps Script.'));
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function chooseGift(row) {
+      giftRows.forEach((item) => item.classList.remove('selected'));
+      row.classList.add('selected');
+      selectedGift = row.dataset.gift || 'Aporte libre';
+      selectedGiftText.textContent = selectedGift;
+      giftAmountInput.value = row.dataset.amount ? formatCLP(row.dataset.amount) : '';
+      document.getElementById('registro').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    async function showBankDetails() {
+      bankInfo.textContent = '';
+      bankInfo.classList.add('hidden');
+      status(bankStatus, '');
+
+      const key = bankPasswordInput.value.trim();
+      if (!key) {
+        status(bankStatus, 'Ingresa la clave para ver los datos de transferencia.');
+        return;
+      }
+
+      showBankBtn.disabled = true;
+      showBankBtn.textContent = 'Validando...';
+
+      try {
+        const data = await jsonp({ action: 'bank', key });
+        if (!data.ok) {
+          status(bankStatus, data.message || 'Clave incorrecta.');
+          return;
+        }
+        bankInfo.textContent = data.bankInfo;
+        bankInfo.classList.remove('hidden');
+        status(bankStatus, 'Clave correcta.');
+      } catch (err) {
+        status(bankStatus, err.message || 'Error al validar la clave.');
+      } finally {
+        showBankBtn.disabled = false;
+        showBankBtn.textContent = 'Mostrar datos';
+      }
+    }
+
+    async function registerGift() {
+      status(registerStatus, '');
+      const name = guestNameInput.value.trim();
+      const amount = giftAmountInput.value.trim();
+      const message = giftMessageInput.value.trim();
+
+      if (!name && !amount && !message) {
+        status(registerStatus, 'Escribe al menos tu nombre, monto o mensaje.');
+        return;
+      }
+
+      registerGiftBtn.disabled = true;
+      registerGiftBtn.textContent = 'Registrando...';
+
+      try {
+        const data = await jsonp({ action: 'record', name, gift: selectedGift, amount, message });
+        if (!data.ok) {
+          status(registerStatus, data.message || 'No se pudo registrar.');
+          return;
+        }
+        status(registerStatus, data.saved ? 'Registro guardado. Gracias.' : 'Registro recibido.');
+      } catch (err) {
+        status(registerStatus, err.message || 'Error al registrar.');
+      } finally {
+        registerGiftBtn.disabled = false;
+        registerGiftBtn.textContent = 'Registrar regalo o mensaje';
+      }
+    }
+
+    giftRows.forEach((row) => row.addEventListener('click', () => chooseGift(row)));
+    showBankBtn.addEventListener('click', showBankDetails);
+    registerGiftBtn.addEventListener('click', registerGift);
+    bankPasswordInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') showBankDetails(); });
+  </script>
 </body>
 </html>
