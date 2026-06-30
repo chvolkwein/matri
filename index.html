@@ -16,11 +16,11 @@
       <p class="place">Lugar / ciudad</p>
     </section>
 
-    <section class="card">
+    <section class="card intro-card">
       <h2>Queremos celebrar contigo</h2>
       <p>
         Estamos muy felices de compartir este día con ustedes. Aquí encontrarás la información
-        principal de la celebración y, más abajo, una forma simple de acceder a los datos para regalo.
+        principal de la celebración y las opciones para regalos.
       </p>
     </section>
 
@@ -40,29 +40,126 @@
       </article>
     </section>
 
-    <section class="card gift-card">
-      <h2>Regalo</h2>
-      <p>
-        Su compañía es lo más importante. Si además quieren hacernos un regalo, pueden acceder
-        a los datos de transferencia usando la clave que compartimos con la invitación.
-      </p>
-
-      <div class="password-box">
-        <label for="password">Clave</label>
-        <div class="password-row">
-          <input id="password" type="password" placeholder="Ingresar clave" autocomplete="off" />
-          <button id="unlockBtn" type="button">Ver datos</button>
-        </div>
-        <p id="status" class="status" aria-live="polite"></p>
+    <section id="regalos" class="gifts-section">
+      <div class="section-heading">
+        <h2>Regalos</h2>
+        <p>
+          Lo más importante es que nos acompañen. Para quienes quieran hacernos un regalo,
+          dejamos estas opciones simples.
+        </p>
       </div>
 
-      <div id="bankInfo" class="bank-info hidden"></div>
+      <div class="gifts-layout">
+        <article class="gift-panel gift-panel-main">
+          <p class="option-label">Opción 1</p>
+          <h3>Transferencia + lista simbólica</h3>
+          <p>
+            Pueden elegir un regalo simbólico, dejarnos un mensaje y luego transferir a la cuenta
+            que prefieran. Así queda registrado quién regaló qué, el monto y el mensaje.
+          </p>
+
+          <div class="gift-options" aria-label="Regalos simbólicos">
+            <button class="gift-item" type="button" data-gift="Luna de miel" data-amount="50000">
+              <span>
+                <strong>Luna de miel</strong>
+                <small>Un aporte para nuestro viaje.</small>
+                <b>$50.000 sugerido</b>
+              </span>
+              <em>Elegir</em>
+            </button>
+
+            <button class="gift-item" type="button" data-gift="Cena especial" data-amount="35000">
+              <span>
+                <strong>Cena especial</strong>
+                <small>Para celebrar después del matrimonio.</small>
+                <b>$35.000 sugerido</b>
+              </span>
+              <em>Elegir</em>
+            </button>
+
+            <button class="gift-item" type="button" data-gift="Nuestro hogar" data-amount="">
+              <span>
+                <strong>Nuestro hogar</strong>
+                <small>Para empezar esta nueva etapa.</small>
+                <b>Aporte libre</b>
+              </span>
+              <em>Elegir</em>
+            </button>
+
+            <button class="gift-item" type="button" data-gift="Experiencias" data-amount="">
+              <span>
+                <strong>Experiencias</strong>
+                <small>Paseos, panoramas y recuerdos.</small>
+                <b>Aporte libre</b>
+              </span>
+              <em>Elegir</em>
+            </button>
+          </div>
+
+          <button id="openGiftFormBtn" class="primary-button wide-button" type="button">
+            Registrar regalo o mensaje
+          </button>
+
+          <div id="giftForm" class="gift-form hidden">
+            <div class="selected-summary">
+              <span>Regalo elegido</span>
+              <strong id="selectedGiftText">Aporte libre</strong>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                Tu nombre
+                <input id="guestName" type="text" placeholder="Nombre y apellido" autocomplete="name" />
+              </label>
+
+              <label>
+                Monto
+                <input id="giftAmount" type="text" placeholder="Ej: 50000" inputmode="numeric" />
+              </label>
+            </div>
+
+            <label>
+              Mensaje opcional
+              <textarea id="giftMessage" rows="3" placeholder="Escribe un mensaje para los novios"></textarea>
+            </label>
+
+            <label>
+              Clave para ver datos de transferencia
+              <input id="giftPassword" type="password" placeholder="Ingresar clave" autocomplete="off" />
+            </label>
+
+            <button id="registerGiftBtn" class="primary-button" type="button">
+              Registrar y ver datos de transferencia
+            </button>
+
+            <p id="giftStatus" class="status" aria-live="polite"></p>
+            <div id="bankInfo" class="bank-info hidden"></div>
+          </div>
+        </article>
+
+        <article class="gift-panel gift-panel-side">
+          <p class="option-label">Opción 2</p>
+          <h3>Lista de novios externa</h3>
+          <p>
+            También pueden usar una plataforma externa de lista de novios, donde el proceso
+            de regalo queda centralizado.
+          </p>
+
+          <a class="primary-button external-button" href="https://www.ejemplo.com/lista-novios" target="_blank" rel="noopener">
+            Ir a la lista externa
+          </a>
+
+          <p class="small-note">
+            Reemplacen este link por Mi Lista de Novios, Falabella, Paris u otra plataforma.
+          </p>
+        </article>
+      </div>
     </section>
 
     <section class="card">
       <h2>Confirmación</h2>
       <p>
-        Por favor confirma tu asistencia en el siguiente link.
+        Por favor confirma tu asistencia respondiendo el mensaje de WhatsApp o escribiéndonos directamente.
       </p>
     </section>
   </main>

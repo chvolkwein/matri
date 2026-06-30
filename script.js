@@ -1,55 +1,126 @@
 // 1) Publica el Apps Script como Web App.
 // 2) Copia la URL terminada en /exec aquí abajo.
-const API_URL = 'https://script.google.com/macros/s/AKfycbzh-h4xncQ7uwVMq5K8MYNI3LIvBeQ_8Tr5-sQKbwlwPxMGFwBInZ7_eGhloF-5DctPYw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby-J8Bvm1UnuOQMcE9kvzQODh-TbQ48uW0bPGouKNSej1Oucm_Ex7Sjj86B-U-i5ys79A/exec';
 
-const passwordInput = document.getElementById('password');
-const unlockBtn = document.getElementById('unlockBtn');
-const statusEl = document.getElementById('status');
+const giftButtons = document.querySelectorAll('.gift-item');
+const openGiftFormBtn = document.getElementById('openGiftFormBtn');
+const giftForm = document.getElementById('giftForm');
+const selectedGiftText = document.getElementById('selectedGiftText');
+const guestNameInput = document.getElementById('guestName');
+const giftAmountInput = document.getElementById('giftAmount');
+const giftMessageInput = document.getElementById('giftMessage');
+const giftPasswordInput = document.getElementById('giftPassword');
+const registerGiftBtn = document.getElementById('registerGiftBtn');
+const giftStatus = document.getElementById('giftStatus');
 const bankInfoEl = document.getElementById('bankInfo');
 
-async function unlockGiftInfo() {
-  const password = passwordInput.value.trim();
+let selectedGift = {
+  name: 'Aporte libre',
+  amount: '',
+};
 
-  bankInfoEl.classList.add('hidden');
+function formatAmount(amount) {
+  if (!amount) return '';
+  return new Intl.NumberFormat('es-CL').format(Number(amount));
+}
+
+function showGiftForm() {
+  giftForm.classList.remove('hidden');
+  giftForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function setSelectedGift(button) {
+  giftButtons.forEach((item) => item.classList.remove('selected'));
+  button.classList.add('selected');
+
+  selectedGift = {
+    name: button.dataset.gift || 'Aporte libre',
+    amount: button.dataset.amount || '',
+  };
+
+  selectedGiftText.textContent = selectedGift.name;
+
+  if (selectedGift.amount) {
+    giftAmountInput.value = formatAmount(selectedGift.amount);
+  } else {
+    giftAmountInput.value = '';
+  }
+
+  showGiftForm();
+}
+
+function resetMessages() {
+  giftStatus.textContent = '';
   bankInfoEl.textContent = '';
-  statusEl.textContent = '';
+  bankInfoEl.classList.add('hidden');
+}
+
+async function registerGiftAndShowBankInfo() {
+  resetMessages();
+
+  const name = guestNameInput.value.trim();
+  const amount = giftAmountInput.value.trim();
+  const message = giftMessageInput.value.trim();
+  const password = giftPasswordInput.value.trim();
+
+  if (!name) {
+    giftStatus.textContent = 'Ingresa tu nombre para registrar el regalo.';
+    return;
+  }
 
   if (!password) {
-    statusEl.textContent = 'Ingresa la clave.';
+    giftStatus.textContent = 'Ingresa la clave para ver los datos de transferencia.';
     return;
   }
 
   if (!API_URL || API_URL.includes('PEGAR_AQUI')) {
-    statusEl.textContent = 'Falta configurar la URL del Apps Script en script.js.';
+    giftStatus.textContent = 'Falta configurar la URL del Apps Script en script.js.';
     return;
   }
 
-  unlockBtn.disabled = true;
-  unlockBtn.textContent = 'Revisando...';
+  registerGiftBtn.disabled = true;
+  registerGiftBtn.textContent = 'Registrando...';
 
   try {
-    const url = `${API_URL}?key=${encodeURIComponent(password)}`;
-    const response = await fetch(url, { method: 'GET' });
+    const params = new URLSearchParams({
+      action: 'record',
+      key: password,
+      name,
+      gift: selectedGift.name,
+      amount,
+      message,
+    });
+
+    const response = await fetch(`${API_URL}?${params.toString()}`, { method: 'GET' });
     const data = await response.json();
 
     if (!data.ok) {
-      statusEl.textContent = data.message || 'Clave incorrecta.';
+      giftStatus.textContent = data.message || 'No se pudo validar la clave.';
       return;
     }
 
     bankInfoEl.textContent = data.bankInfo;
     bankInfoEl.classList.remove('hidden');
-    statusEl.textContent = 'Datos desbloqueados.';
+
+    giftStatus.textContent = data.saved
+      ? 'Regalo registrado. Puedes hacer la transferencia con estos datos.'
+      : 'Clave correcta. Los datos se muestran abajo. Ojo: falta conectar el Google Sheet para registrar automáticamente.';
   } catch (error) {
     console.error(error);
-    statusEl.textContent = 'No se pudo cargar la información. Intenta de nuevo.';
+    giftStatus.textContent = 'No se pudo conectar con Google Apps Script. Revisa la URL /exec y el deployment.';
   } finally {
-    unlockBtn.disabled = false;
-    unlockBtn.textContent = 'Ver datos';
+    registerGiftBtn.disabled = false;
+    registerGiftBtn.textContent = 'Registrar y ver datos de transferencia';
   }
 }
 
-unlockBtn.addEventListener('click', unlockGiftInfo);
-passwordInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') unlockGiftInfo();
+giftButtons.forEach((button) => {
+  button.addEventListener('click', () => setSelectedGift(button));
+});
+
+openGiftFormBtn.addEventListener('click', showGiftForm);
+registerGiftBtn.addEventListener('click', registerGiftAndShowBankInfo);
+
+giftPasswordInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') registerGiftAndShowBankInfo();
 });
