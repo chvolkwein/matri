@@ -1,6 +1,6 @@
 // Pega aquí la URL /exec de Google Apps Script cuando la tengas.
 // Ejemplo: const API_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
-const API_URL = 'https://script.google.com/macros/s/AKfycby-J8Bvm1UnuOQMcE9kvzQODh-TbQ48uW0bPGouKNSej1Oucm_Ex7Sjj86B-U-i5ys79A/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzhrt9_I2ZcrsFQ-Vc2deZwgE0qoa1C5cPSNm1y5Y-6uSlNFyYcmQVkttRgmfDwy8tZzQ/exec';
 
 const giftRows = document.querySelectorAll('.gift-row');
 const selectedGiftText = document.getElementById('selectedGiftText');
