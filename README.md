@@ -59,3 +59,6 @@ Edita directamente `index.html`. Busca estos textos y reemplázalos:
 ## Importante sobre privacidad
 
 Esta es la solución simple. Sirve para que invitados normales no vean la página sin clave, pero no es seguridad real. Como GitHub Pages es estático, alguien técnico podría abrir el código fuente y ver el contenido o la clave.
+
+
+Nota: esta versión ajusta la portada para que no se corte y permite scroll en la pantalla de clave.
