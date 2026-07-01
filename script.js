@@ -1,143 +1,90 @@
-// Pega aquí la URL /exec de Google Apps Script cuando la tengas.
-// Ejemplo: const API_URL = 'https://script.google.com/macros/s/AKfycb.../exec';
-const API_URL = 'https://script.google.com/macros/s/AKfycbzhrt9_I2ZcrsFQ-Vc2deZwgE0qoa1C5cPSNm1y5Y-6uSlNFyYcmQVkttRgmfDwy8tZzQ/exec';
+// Cambia esta clave por la que quieres enviar a tus invitados.
+// OJO: esta es la solución simple. La clave queda visible para alguien que revise el código fuente.
+const PASSWORD = "matrimonio2027";
 
-const giftRows = document.querySelectorAll('.gift-row');
-const selectedGiftText = document.getElementById('selectedGiftText');
-const guestNameInput = document.getElementById('guestName');
-const giftAmountInput = document.getElementById('giftAmount');
-const giftMessageInput = document.getElementById('giftMessage');
-const registerGiftBtn = document.getElementById('registerGiftBtn');
-const registerStatus = document.getElementById('registerStatus');
-const bankPasswordInput = document.getElementById('bankPassword');
-const showBankBtn = document.getElementById('showBankBtn');
-const bankStatus = document.getElementById('bankStatus');
-const bankInfo = document.getElementById('bankInfo');
+// Cambia esta fecha/hora para el contador.
+// Formato: YYYY-MM-DDTHH:mm:ss
+const WEDDING_DATE = "2027-01-09T18:00:00";
 
-let selectedGift = 'Aporte libre';
+const authScreen = document.getElementById("auth-screen");
+const siteContent = document.getElementById("site-content");
+const passwordForm = document.getElementById("password-form");
+const passwordInput = document.getElementById("password-input");
+const authError = document.getElementById("auth-error");
+const lockAgain = document.getElementById("lock-again");
+const countdown = document.getElementById("countdown");
+const giftSelected = document.getElementById("gift-selected");
+const giftButtons = document.querySelectorAll("[data-gift]");
 
-function isApiConfigured() {
-  return API_URL && !API_URL.includes('PEGAR_AQUI');
+function normalize(value) {
+  return value.trim().toLowerCase();
 }
 
-function formatCLP(value) {
-  if (!value) return '';
-  const numeric = String(value).replace(/\D/g, '');
-  if (!numeric) return '';
-  return new Intl.NumberFormat('es-CL').format(Number(numeric));
+function unlockSite() {
+  document.body.classList.remove("locked");
+  authScreen.classList.add("hidden");
+  siteContent.classList.remove("hidden");
+  localStorage.setItem("wedding_invitation_unlocked", "true");
 }
 
-function setStatus(element, text) {
-  element.textContent = text || '';
+function lockSite() {
+  document.body.classList.add("locked");
+  siteContent.classList.add("hidden");
+  authScreen.classList.remove("hidden");
+  localStorage.removeItem("wedding_invitation_unlocked");
+  passwordInput.value = "";
+  passwordInput.focus();
 }
 
-function clearBankInfo() {
-  bankInfo.textContent = '';
-  bankInfo.classList.add('hidden');
-}
+passwordForm.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-function chooseGift(row) {
-  giftRows.forEach((item) => item.classList.remove('selected'));
-  row.classList.add('selected');
-
-  selectedGift = row.dataset.gift || 'Aporte libre';
-  selectedGiftText.textContent = selectedGift;
-
-  giftAmountInput.value = row.dataset.amount ? formatCLP(row.dataset.amount) : '';
-  document.getElementById('registro').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-async function callApi(params) {
-  if (!isApiConfigured()) {
-    throw new Error('Falta configurar la URL del Apps Script en script.js.');
+  if (normalize(passwordInput.value) === normalize(PASSWORD)) {
+    authError.textContent = "";
+    unlockSite();
+  } else {
+    authError.textContent = "Clave incorrecta. Intenta nuevamente.";
+    passwordInput.select();
   }
+});
 
-  const url = `${API_URL}?${new URLSearchParams(params).toString()}`;
-  const response = await fetch(url, { method: 'GET' });
+lockAgain.addEventListener("click", lockSite);
 
-  if (!response.ok) {
-    throw new Error('Google Apps Script respondió con error.');
-  }
-
-  return response.json();
+if (localStorage.getItem("wedding_invitation_unlocked") === "true") {
+  unlockSite();
 }
 
-async function showBankDetails() {
-  setStatus(bankStatus, '');
-  clearBankInfo();
+function updateCountdown() {
+  const target = new Date(WEDDING_DATE).getTime();
+  const now = Date.now();
+  const diff = target - now;
 
-  const key = bankPasswordInput.value.trim();
-  if (!key) {
-    setStatus(bankStatus, 'Ingresa la clave para ver los datos de transferencia.');
+  if (!Number.isFinite(target)) {
+    countdown.textContent = "Edita la fecha en script.js";
     return;
   }
 
-  showBankBtn.disabled = true;
-  showBankBtn.textContent = 'Validando...';
-
-  try {
-    const data = await callApi({ action: 'bank', key });
-
-    if (!data.ok) {
-      setStatus(bankStatus, data.message || 'Clave incorrecta.');
-      return;
-    }
-
-    bankInfo.textContent = data.bankInfo;
-    bankInfo.classList.remove('hidden');
-    setStatus(bankStatus, 'Clave correcta.');
-  } catch (error) {
-    console.error(error);
-    setStatus(bankStatus, error.message || 'No se pudo conectar con Google Apps Script.');
-  } finally {
-    showBankBtn.disabled = false;
-    showBankBtn.textContent = 'Mostrar datos';
-  }
-}
-
-async function registerGift() {
-  setStatus(registerStatus, '');
-
-  const name = guestNameInput.value.trim();
-  const amount = giftAmountInput.value.trim();
-  const message = giftMessageInput.value.trim();
-
-  if (!name && !message && !amount) {
-    setStatus(registerStatus, 'Escribe al menos tu nombre, monto o mensaje.');
+  if (diff <= 0) {
+    countdown.textContent = "¡Llegó el gran día!";
     return;
   }
 
-  registerGiftBtn.disabled = true;
-  registerGiftBtn.textContent = 'Registrando...';
+  const totalSeconds = Math.floor(diff / 1000);
+  const days = Math.floor(totalSeconds / (60 * 60 * 24));
+  const hours = Math.floor((totalSeconds / (60 * 60)) % 24);
+  const minutes = Math.floor((totalSeconds / 60) % 60);
 
-  try {
-    const data = await callApi({
-      action: 'record',
-      name,
-      gift: selectedGift,
-      amount,
-      message,
-    });
-
-    if (!data.ok) {
-      setStatus(registerStatus, data.message || 'No se pudo registrar.');
-      return;
-    }
-
-    setStatus(registerStatus, data.saved ? 'Registro guardado. Gracias.' : 'Registro recibido.');
-  } catch (error) {
-    console.error(error);
-    setStatus(registerStatus, error.message || 'No se pudo conectar con Google Apps Script.');
-  } finally {
-    registerGiftBtn.disabled = false;
-    registerGiftBtn.textContent = 'Registrar regalo o mensaje';
-  }
+  countdown.textContent = `${days} días · ${hours} horas · ${minutes} minutos`;
 }
 
-giftRows.forEach((row) => row.addEventListener('click', () => chooseGift(row)));
-showBankBtn.addEventListener('click', showBankDetails);
-registerGiftBtn.addEventListener('click', registerGift);
+updateCountdown();
+setInterval(updateCountdown, 60 * 1000);
 
-bankPasswordInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') showBankDetails();
+giftButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    giftButtons.forEach((item) => item.classList.remove("selected"));
+    button.classList.add("selected");
+    const gift = button.dataset.gift;
+    giftSelected.textContent = `Puedes poner “${gift}” en el comentario de la transferencia.`;
+  });
 });

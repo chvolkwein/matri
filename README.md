@@ -1,50 +1,61 @@
-# Invitación de matrimonio en GitHub Pages
+# Invitación de matrimonio con clave simple
 
-Este paquete tiene una página estática para GitHub Pages y un Apps Script opcional para mostrar los datos de transferencia solo después de ingresar una clave.
+Esta versión muestra una pantalla de clave al entrar a la página. Si la clave es correcta, se muestra la invitación completa.
 
 ## Archivos
 
-- `index.html`: página principal.
+- `index.html`: estructura de la página.
 - `styles.css`: diseño visual.
-- `script.js`: lógica para pedir la clave y consultar Apps Script.
-- `apps_script.gs`: código que va en Google Apps Script, no en GitHub.
+- `script.js`: clave, contador y comportamiento interactivo.
+- `.nojekyll`: archivo vacío para GitHub Pages.
+- `README.md`: instrucciones.
 
-## Paso 1: crear el repositorio en GitHub
+## Qué subir a GitHub
 
-1. Entra a GitHub.
-2. Crea un repositorio nuevo.
-3. Puede ser público si usas Apps Script para esconder los datos bancarios.
-4. Sube `index.html`, `styles.css` y `script.js` a la raíz del repo.
-5. No subas tus datos bancarios reales al repo.
+Sube todos estos archivos a la raíz del repo:
 
-## Paso 2: activar GitHub Pages
+```text
+index.html
+styles.css
+script.js
+.nojekyll
+README.md
+```
 
-1. En el repo, entra a Settings > Pages.
-2. En Source, elige `Deploy from a branch`.
-3. Branch: `main`.
-4. Folder: `/root`.
-5. Guarda.
-6. GitHub te dará una URL tipo `https://usuario.github.io/repo/`.
+La raíz es el nivel principal del repo, no una carpeta llamada `root`.
 
-## Paso 3: crear el Apps Script
+## Cambiar la clave
 
-1. Entra a https://script.google.com/.
-2. Crea un proyecto nuevo.
-3. Pega el contenido de `apps_script.gs`.
-4. Cambia `SECRET_KEY` por la clave que compartirás con invitados.
-5. Cambia `BANK_INFO` por tus datos reales.
-6. Deploy > New deployment > Web app.
-7. Execute as: Me.
-8. Who has access: Anyone.
-9. Copia la URL que termina en `/exec`.
+Abre `script.js` y cambia esta línea:
 
-## Paso 4: conectar la página con Apps Script
+```js
+const PASSWORD = "matrimonio2027";
+```
 
-1. Abre `script.js`.
-2. Reemplaza `PEGAR_AQUI_URL_DEL_APPS_SCRIPT_EXEC` por la URL `/exec` del Apps Script.
-3. Sube el cambio a GitHub.
+Por ejemplo:
 
-## Nota de privacidad
+```js
+const PASSWORD = "nuestraClave";
+```
 
-GitHub Pages es público. Por eso los datos bancarios no deben estar en `index.html`, `script.js` ni `styles.css`.
-La clave con Apps Script no es seguridad bancaria avanzada, pero evita que los datos queden visibles directamente en el código del sitio.
+## Cambiar fecha del contador
+
+En `script.js`, cambia:
+
+```js
+const WEDDING_DATE = "2027-01-09T18:00:00";
+```
+
+## Cambiar textos/datos
+
+Edita directamente `index.html`. Busca estos textos y reemplázalos:
+
+- `Nombre & Nombre`
+- `Sábado 9 de enero de 2027`
+- `Ciudad / Lugar`
+- datos de transferencia
+- link de WhatsApp para confirmar asistencia
+
+## Importante sobre privacidad
+
+Esta es la solución simple. Sirve para que invitados normales no vean la página sin clave, pero no es seguridad real. Como GitHub Pages es estático, alguien técnico podría abrir el código fuente y ver el contenido o la clave.
