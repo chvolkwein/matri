@@ -9,11 +9,14 @@
   <script defer src="script.js"></script>
 </head>
 <body class="locked">
-  <!-- Pantalla inicial: solo se ve esto antes de poner la clave -->
   <section id="auth-screen" class="auth-screen" aria-label="Acceso con clave">
-    <div class="auth-card">
+    <div class="auth-card auth-card--image">
       <p class="eyebrow">Invitación privada</p>
-      <h1>Nos casamos</h1>
+      <img
+        class="auth-hero-image"
+        src="portada-invitacion.png"
+        alt="Invitación de Christopher y Viviana"
+      />
       <p class="auth-text">Ingresa la clave para ver toda la información del matrimonio.</p>
 
       <form id="password-form" class="password-form">
@@ -27,14 +30,13 @@
     </div>
   </section>
 
-  <!-- Todo el sitio queda oculto hasta que la clave sea correcta -->
   <main id="site-content" class="site-content hidden">
     <section class="hero section">
       <div class="hero-card">
         <p class="eyebrow">Tenemos el honor de invitarte a nuestro matrimonio</p>
-        <h1>Nombre &amp; Nombre</h1>
+        <h1>Christopher &amp; Viviana</h1>
         <p class="date-line">Sábado 9 de enero de 2027</p>
-        <p class="place-line">Ciudad / Lugar</p>
+        <p class="place-line">Casona Los Paltos, Paine · 19:00 hrs</p>
         <a class="primary-button" href="#regalos">Ver lista de regalos</a>
       </div>
     </section>
@@ -57,12 +59,12 @@
 
       <article class="info-card">
         <h3>Hora</h3>
-        <p>18:00 hrs</p>
+        <p>19:00 hrs</p>
       </article>
 
       <article class="info-card">
         <h3>Lugar</h3>
-        <p>Nombre del lugar<br />Dirección, ciudad</p>
+        <p>Casona Los Paltos<br />Paine, Chile</p>
       </article>
 
       <article class="info-card">
@@ -82,10 +84,10 @@
       <div class="narrow">
         <h2>Programa</h2>
         <div class="timeline">
-          <div><span>18:00</span><p>Ceremonia</p></div>
-          <div><span>19:00</span><p>Cóctel</p></div>
-          <div><span>20:30</span><p>Cena</p></div>
-          <div><span>22:00</span><p>Fiesta</p></div>
+          <div><span>19:00</span><p>Ceremonia</p></div>
+          <div><span>20:00</span><p>Cóctel</p></div>
+          <div><span>21:00</span><p>Cena</p></div>
+          <div><span>22:30</span><p>Fiesta</p></div>
         </div>
       </div>
     </section>
@@ -104,27 +106,27 @@
             <dl>
               <div>
                 <dt>Nombre</dt>
-                <dd>Nombre Apellido</dd>
+                <dd>Christopher / Viviana</dd>
               </div>
               <div>
                 <dt>RUT / ID</dt>
-                <dd>00.000.000-0</dd>
+                <dd>Completar</dd>
               </div>
               <div>
                 <dt>Banco</dt>
-                <dd>Nombre del banco</dd>
+                <dd>Completar</dd>
               </div>
               <div>
                 <dt>Tipo de cuenta</dt>
-                <dd>Cuenta corriente</dd>
+                <dd>Completar</dd>
               </div>
               <div>
                 <dt>Número de cuenta</dt>
-                <dd>000000000</dd>
+                <dd>Completar</dd>
               </div>
               <div>
                 <dt>Email</dt>
-                <dd>correo@ejemplo.com</dd>
+                <dd>Completar</dd>
               </div>
             </dl>
           </article>
@@ -152,7 +154,7 @@
     </section>
 
     <footer class="footer">
-      <p>Con cariño, Nombre &amp; Nombre</p>
+      <p>Con cariño, Christopher &amp; Viviana</p>
       <button id="lock-again" class="text-button" type="button">Cerrar invitación</button>
     </footer>
   </main>

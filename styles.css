@@ -42,13 +42,17 @@ body.locked {
 }
 
 .auth-card {
-  width: min(520px, 100%);
-  padding: 42px;
+  width: min(900px, 100%);
+  padding: 28px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 250, 244, 0.92);
+  background: rgba(255, 250, 244, 0.95);
   box-shadow: var(--shadow);
   text-align: center;
+}
+
+.auth-card--image {
+  padding-top: 24px;
 }
 
 .eyebrow {
@@ -61,23 +65,25 @@ body.locked {
   text-transform: uppercase;
 }
 
-.auth-card h1,
-.hero-card h1 {
-  margin: 0;
-  font-size: clamp(3rem, 9vw, 6.2rem);
-  font-weight: 400;
-  line-height: 0.95;
+.auth-hero-image {
+  display: block;
+  width: min(760px, 100%);
+  margin: 12px auto 20px;
+  height: auto;
+  border-radius: 18px;
 }
 
 .auth-text {
-  margin: 22px auto 28px;
-  max-width: 360px;
+  margin: 0 auto 22px;
+  max-width: 500px;
   color: var(--muted);
   font-family: Arial, sans-serif;
   line-height: 1.55;
 }
 
 .password-form {
+  width: min(520px, 100%);
+  margin: 0 auto;
   text-align: left;
 }
 
@@ -174,6 +180,14 @@ button:hover,
   text-align: center;
 }
 
+.auth-card h1,
+.hero-card h1 {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 6.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
 .date-line,
 .place-line {
   margin: 24px 0 0;
@@ -258,137 +272,132 @@ p {
 .timeline div {
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 18px;
+  gap: 24px;
   padding: 18px 0;
   border-bottom: 1px solid var(--line);
+  align-items: center;
   text-align: left;
 }
 
 .timeline span {
-  color: var(--accent);
-  font: 800 1rem Arial, sans-serif;
+  font: 700 1rem Arial, sans-serif;
+  color: var(--accent-dark);
 }
 
 .timeline p {
   margin: 0;
-  color: var(--ink);
 }
 
 .gift-layout {
+  margin-top: 26px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 18px;
-  margin-top: 32px;
   text-align: left;
 }
 
 .transfer-card,
 .gift-card {
-  padding: 30px;
+  padding: 28px;
 }
 
-dl {
+.transfer-card dl {
   margin: 0;
+  display: grid;
+  gap: 16px;
 }
 
-dl div {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  gap: 14px;
-  padding: 12px 0;
+.transfer-card dl div {
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
 }
 
-dl div:last-child {
-  border-bottom: 0;
+.transfer-card dt {
+  font: 700 0.85rem Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 4px;
 }
 
-dt {
-  color: var(--muted);
-  font: 700 0.9rem Arial, sans-serif;
-}
-
-dd {
+.transfer-card dd {
   margin: 0;
+  font-family: Arial, sans-serif;
   color: var(--ink);
-  font: 1rem Arial, sans-serif;
 }
 
 .gift-options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 12px;
 }
 
 .gift-options button {
-  background: white;
-  color: var(--accent-dark);
+  width: 100%;
+  justify-content: flex-start;
+  background: #fff;
+  color: var(--ink);
   border: 1px solid var(--line);
+  padding: 16px 18px;
 }
 
 .gift-options button:hover,
 .gift-options button.selected {
-  background: var(--accent);
   color: white;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .gift-selected {
-  min-height: 3.2em;
-  margin-bottom: 0;
+  margin-top: 16px;
+}
+
+.rsvp-section {
+  text-align: center;
 }
 
 .footer {
-  padding: 44px 22px 64px;
+  padding: 28px 22px 48px;
   text-align: center;
 }
 
 .text-button {
-  margin-top: 8px;
-  padding: 0;
+  margin-top: 10px;
   background: transparent;
-  color: var(--muted);
-  text-decoration: underline;
-  font-weight: 400;
+  color: var(--accent-dark);
+  border: 1px solid var(--line);
 }
 
 .text-button:hover {
-  background: transparent;
-  color: var(--accent-dark);
-  transform: none;
+  background: rgba(155, 111, 69, 0.08);
 }
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .info-grid,
   .gift-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .info-grid {
-    width: min(620px, calc(100% - 44px));
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 720px) {
   .auth-card {
-    padding: 30px 22px;
+    padding: 18px;
   }
 
   .password-row {
     flex-direction: column;
   }
 
-  .section {
-    padding: 52px 18px;
+  .info-grid,
+  .gift-layout {
+    grid-template-columns: 1fr;
   }
 
-  .timeline div,
-  dl div {
+  .timeline div {
     grid-template-columns: 1fr;
     gap: 6px;
   }
 
-  .gift-options {
-    grid-template-columns: 1fr;
+  .section {
+    padding: 52px 18px;
   }
 }
