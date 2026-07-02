@@ -28,7 +28,7 @@ body {
 body.locked {
   min-height: 100vh;
   overflow-y: auto;
-  background: #f5f3e3;
+  background: #FFFCEB;
 }
 
 .hidden {
@@ -40,7 +40,7 @@ body.locked {
   display: grid;
   place-items: start center;
   padding: 24px;
-  background: #f5f3e3;
+  background: #FFFCEB;
 }
 
 .auth-card {
@@ -48,7 +48,7 @@ body.locked {
   padding: 22px;
   border: 1px solid #ddd8c3;
   border-radius: var(--radius);
-  background: #f5f3e3;
+  background: #FFFCEB;
   box-shadow: var(--shadow);
   text-align: center;
 }
